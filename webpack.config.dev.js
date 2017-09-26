@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -7,7 +8,7 @@ module.exports = {
   entry: [
     'eventsource-polyfill',
     'webpack-hot-middleware/client?reload=true',
-    './app/index.js'
+    './client/index.js'
   ],
 
   module: {
@@ -20,11 +21,21 @@ module.exports = {
       exclude: /node_module/
     }, {
       test: /\.css$/,
-      loader: 'style-loader!css-loader'
-    }, {
-      test: /.\s[ac]ss$/,
       exclude: /node_module/,
-      loader: 'style-loader!css-loader!postcss-loader!sass-loader'
+      use: [{
+        loader: 'style-loader'
+      }, {
+        loader: 'css-loader',
+        options: {
+          localIdentName: '[name]__[local]__[hash:base64:5]',
+          modules: true
+        }
+      }, {
+        loader: 'postcss-loader',
+        options: {
+          plugins: () => [autoprefixer]
+        }
+      }]
     }, {
       test: /\.(png|gif|jpg|svg)$/,
       exclude: /node_module/,

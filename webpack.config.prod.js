@@ -1,10 +1,11 @@
 const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
   entry: {
-    app: './app/index.js',
+    app: './client/index.js',
     // 第三方 libraries 打包成 vender.js
     vendor: [
       'babel-polyfill',
@@ -25,12 +26,12 @@ module.exports = {
    * 
    * filename: 以 js 檔案為主，輸出的名稱
    * path: 輸出路徑檔案的路徑，包含其他 css, images 等等的輸出路徑
-   * public: 靜態檔案的路徑
+   * publicPath: 取得輸出檔案的路徑
    */
   output: {
-    filename: 'js/bundle-[hash:5].js',
-    path: path.join(__dirname, 'server/public'),
-    publicPath: '/'
+    filename: 'js/bundle.js',
+    path: path.join(__dirname, 'server/public/build'),
+    publicPath: '/build/'
   },
 
   module: {
@@ -42,35 +43,28 @@ module.exports = {
       test: /\.js?$/,
       exclude: /node_module/
     }, {
+      // 讀取順序為 postcss-loader -> css-loader -> style-loader
       test: /\.css$/,
-      use: [{
-        loader: 'style-loader'
-      }, {
-        loader: 'css-loader',
-        options: {
-          localIdentName: '[name]__[local]__[hash:base64:5]',
-          modules: true
-        }
-      }]
-    }, {
-      test: /\.s[ac]ss$/,
       exclude: /node_module/,
       use: [{
         loader: 'style-loader'
       }, {
         loader: 'css-loader',
         options: {
-          localIdentName: '[sha512:hash:base32]-[name]-[local]',
+          localIdentName: '[name]-[local]-[hash:base64:5]',
           modules: true
         }
       }, {
-        loader: 'postcss-loader'
-      }, {
-        loader: 'sass-loader'
+        loader: 'postcss-loader',
+        options: {
+          // 自動追加 -webkit / -moz / -ms 等前綴詞
+          plugins: () => [autoprefixer]
+        }
       }]
     }, {
       test: /\.(png|gif|jpg|svg)$/,
       exclude: /node_module/,
+      // 若是圖片檔案容量小於 25000 bits，則轉成 base64，否則轉成圖片至 public/build 底下
       loader: 'url-loader?limit=25000&name=img/[name]-[hash:5].[ext]'
     }]
   },
@@ -79,8 +73,8 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"'
     }),
-    // 刪除 server 底下的 public 資料夾
-    new CleanWebpackPlugin(['server/public'], {
+    // 刪除 build 出檔案之資料夾
+    new CleanWebpackPlugin(['server/public/build'], {
       verbose: true
     }),
     new webpack.LoaderOptionsPlugin({
@@ -91,7 +85,7 @@ module.exports = {
       name: 'vendor',
       chunks: ['app'],
       minChunks: Infinity,
-      filename: 'js/vendor-[hash:5].js'
+      filename: 'js/vendor.js'
     }),
     new webpack.optimize.UglifyJsPlugin({
       output: {

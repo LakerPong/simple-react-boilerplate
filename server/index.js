@@ -6,7 +6,6 @@ const express = require('express');
 const setupDevMiddleware = require('./devMiddleware');
 
 const app = express();
-
 const isDev = process.env.NODE_ENV !== 'production';
 
 if (isDev) {

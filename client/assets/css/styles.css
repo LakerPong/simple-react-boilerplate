@@ -1,0 +1,8 @@
+@import "normalize.css";
+body {
+  background: rgb(246, 231, 231);
+}
+
+body:before {
+  content: 'Import global CSS'
+}
