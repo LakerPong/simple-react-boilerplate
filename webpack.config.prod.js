@@ -17,6 +17,7 @@ module.exports = {
       'react-router-dom',
       'react',
       'redux-actions',
+      'react-tap-event-plugin',
       'redux-thunk',
       'redux'
     ]
