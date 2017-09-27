@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production ./node_modules/.bin/webpack --config webpack.config.prod.js --color -p --progress --hide-modules",
+    "clean": "rm -rf ./client/assets/css/* ./client/assets/img/* ./client/*.css ./server/public/build",
     "start": "node server",
     "start:prod": "cross-env NODE_ENV=production node server",
-    "start:production": "npm run build && npm run start:prod",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:production": "npm run build && npm run start:prod"
   },
   "keywords": [],
   "author": "Laker",
