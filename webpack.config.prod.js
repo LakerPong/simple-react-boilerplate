@@ -14,7 +14,7 @@ module.exports = {
       'isomorphic-fetch',
       'react-dom',
       'react-redux',
-      'react-router',
+      'react-router-dom',
       'react',
       'redux-actions',
       'redux-thunk',
