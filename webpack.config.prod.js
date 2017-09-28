@@ -12,6 +12,7 @@ module.exports = {
       'es6-promise',
       'seamless-immutable',
       'isomorphic-fetch',
+      'prop-types',
       'react-dom',
       'react-redux',
       'react-router-dom',
