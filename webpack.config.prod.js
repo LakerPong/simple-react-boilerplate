@@ -10,7 +10,7 @@ module.exports = {
     vendor: [
       'babel-polyfill',
       'es6-promise',
-      'immutable',
+      'seamless-immutable',
       'isomorphic-fetch',
       'react-dom',
       'react-redux',
