@@ -30,6 +30,7 @@
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0",
+    "seamless-immutable": "^7.1.2",
     "styled-components": "^2.1.2",
     "webpack": "^3.6.0"
   },

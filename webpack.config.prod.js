@@ -17,7 +17,7 @@ module.exports = {
       'react-router-dom',
       'react',
       'redux-actions',
-      'react-tap-event-plugin',
+      // 'react-tap-event-plugin', // it will be error in production environment with React v16
       'redux-thunk',
       'redux'
     ]
